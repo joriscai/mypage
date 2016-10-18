@@ -1,0 +1,21 @@
+{
+  "name": "mypage",
+  "description": "This is a web page to show me.",
+  "main": "index.js",
+  "authors": [
+    "joriscai"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "react": "^15.3.2"
+  }
+}
