@@ -3,7 +3,9 @@
 var gulp = require('gulp'),
 	path = require('path'),
     del  = require('del'),
-	sass = require('gulp-sass'),
+    sass = require('gulp-sass'),
+    clean = require('gulp-clean'),
+    rename = require('gulp-rename'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
     concatCss = require('gulp-concat-css'),
@@ -12,7 +14,8 @@ var gulp = require('gulp'),
     sassMap = require('gulp-ruby-sass'),
     browserify = require('browserify'),
     sourcemaps = require('gulp-sourcemaps'),
-	browserSync = require('browser-sync').create();
+	browserSync = require('browser-sync').create(),
+    autoprefixer = require('gulp-autoprefixer');
 
 var srcDir = './app/',
     dstDir = './dist/',
@@ -40,8 +43,15 @@ gulp.task('serve', ['clean:tmp', 'sass', 'js', 'html'], function() {
 gulp.task('sass', function() {
     return gulp.src(srcDir+"scss/*.scss")
         .pipe(sass({
+                // includePaths: [tmpDir],
                 outputStyle: 'nested'
             }).on('error',sass.logError))
+        .pipe(autoprefixer({
+                browsers: ['last 2 versions','Android >= 4.0'],
+                cascade: true,
+                remove: true
+            })
+        )
         .pipe(gulp.dest(tmpDir+'css'))
         .pipe(browserSync.reload({stream: true}));
 });
@@ -49,10 +59,20 @@ gulp.task('sass', function() {
 // Compile sass into CSS & to publish
 gulp.task('sass:dist', function() {
     return gulp.src(srcDir+"scss/*.scss")
+        .pipe(autoprefixer({
+                browsers: ['last 2 versions','Android >= 4.0'],
+                cascade: true,
+                remove: true
+            })
+        )
+        .pipe(concatCss('main.css'))
         .pipe(sass({
                 outputStyle: 'compressed'
             }).on('error',sass.logError))
-        .pipe(concatCss('main.css'))
+        .pipe(rename({
+                extname: '.min.css'
+            })
+        )
         .pipe(gulp.dest(dstDir+"css"));
 });
 <!-- End: sass task-->
@@ -117,7 +137,7 @@ gulp.task('html:dist', function(){
 
 // Build a deploy version
 gulp.task('build', ['clean:dist', 'html:dist', 'sass:dist', 'js:dist'], function(){
-    
+
 });
 
 // Build a deploy version & testing
@@ -127,17 +147,23 @@ gulp.task('build:watch', ['build'], function(){
 
 // Delete temp & dist files task
 gulp.task('clean', function(){
-    del([tmpDir, dstDir], {force: true});
+    // del([tmpDir, dstDir], {force: true});
+    return gulp.src([tmpDir, dstDir], {read: false})
+              .pipe(clean({force: true}));
 });
 // Delete temp files task
 gulp.task('clean:tmp', function(){
-    del([tmpDir], {dryRun: true, force: true}).then(function(path){
-        // console.log('Delete:', path.join('\n'));
-    });
+    // del([tmpDir], {dryRun: true, force: true}).then(function(path){
+    //     // console.log('Delete:', path.join('\n'));
+    // });
+    return gulp.src(tmpDir, {read: false})
+              .pipe(clean({force: true}));
 });
 // Delete dist files task
 gulp.task('clean:dist', function(){
-    del([dstDir], {force: true});
+    // del([dstDir], {force: true});
+    return gulp.src(dstDir, {read: false})
+              .pipe(clean({force: true}));
 });
 
 // default task
