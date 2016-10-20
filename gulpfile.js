@@ -15,13 +15,18 @@ var gulp = require('gulp'),
     browserify = require('browserify'),
     sourcemaps = require('gulp-sourcemaps'),
 	browserSync = require('browser-sync').create(),
+    gulpSequence = require('gulp-sequence').use(gulp),
     autoprefixer = require('gulp-autoprefixer');
 
 var srcDir = './app/',
     dstDir = './dist/',
     tmpDir = './.tmp/';
+    
+// Fix the tasks run in parallel
+gulp.task('serve', gulpSequence('clean:tmp', ['sass', 'js'], 'html', 'watch'));
+
 // Static Server + watching scss/html files
-gulp.task('serve', ['clean:tmp', 'sass', 'js', 'html'], function() {
+gulp.task('watch', function() {
     browserSync.init({
         server: {
             baseDir: tmpDir,
@@ -29,11 +34,14 @@ gulp.task('serve', ['clean:tmp', 'sass', 'js', 'html'], function() {
                 "/.tmp": ".tmp",
                 "/bower_components": "bower_components"
             }
-        }
+        },
+        //在Chrome浏览器中打开网站 
+        browser: "chrome"
     });
 
     gulp.watch(srcDir+"js/**/*.js", ['js-watch']);
     gulp.watch(srcDir+"scss/**/*.scss", ['sass']);
+    gulp.watch("bower.json", ['html']);
     gulp.watch(srcDir+"*.html", ['html']);
     gulp.watch(tmpDir+"*.html").on('change', browserSync.reload);
 });
@@ -47,7 +55,7 @@ gulp.task('sass', function() {
                 outputStyle: 'nested'
             }).on('error',sass.logError))
         .pipe(autoprefixer({
-                browsers: ['last 2 versions','Android >= 4.0'],
+                browsers: ['last 3 versions','Android >= 4.0'],
                 cascade: true,
                 remove: true
             })
@@ -149,7 +157,7 @@ gulp.task('build:watch', ['build'], function(){
 gulp.task('clean', function(){
     // del([tmpDir, dstDir], {force: true});
     return gulp.src([tmpDir, dstDir], {read: false})
-              .pipe(clean({force: true}));
+              .pipe(clean());
 });
 // Delete temp files task
 gulp.task('clean:tmp', function(){
@@ -157,13 +165,13 @@ gulp.task('clean:tmp', function(){
     //     // console.log('Delete:', path.join('\n'));
     // });
     return gulp.src(tmpDir, {read: false})
-              .pipe(clean({force: true}));
+              .pipe(clean());
 });
 // Delete dist files task
 gulp.task('clean:dist', function(){
     // del([dstDir], {force: true});
     return gulp.src(dstDir, {read: false})
-              .pipe(clean({force: true}));
+              .pipe(clean());
 });
 
 // default task
