@@ -23,6 +23,7 @@
     "gulp-jshint": "^2.0.1",
     "gulp-load-plugins": "^1.3.0",
     "gulp-minify-html": "^1.0.6",
+    "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-rev": "^7.1.2",
@@ -30,8 +31,10 @@
     "gulp-rev-collector": "^1.0.5",
     "gulp-ruby-sass": "^2.1.0",
     "gulp-sass": "^2.3.2",
+    "gulp-sequence": "^0.4.6",
     "gulp-sourcemaps": "^2.1.1",
     "gulp-uglify": "^2.0.0",
+    "gulp-watch": "^4.3.10",
     "gulp-wiredep": "^0.0.0",
     "load-tasks-gulp": "^0.0.3"
   },

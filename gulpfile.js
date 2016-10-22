@@ -5,6 +5,7 @@ var gulp = require('gulp'),
     del  = require('del'),
     sass = require('gulp-sass'),
     clean = require('gulp-clean'),
+    watch = require('gulp-watch'),
     rename = require('gulp-rename'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
@@ -12,16 +13,17 @@ var gulp = require('gulp'),
     wiredep = require('wiredep').stream,
     replace = require('gulp-replace'),
     sassMap = require('gulp-ruby-sass'),
+    plumber = require('gulp-plumber'),
     browserify = require('browserify'),
     sourcemaps = require('gulp-sourcemaps'),
 	browserSync = require('browser-sync').create(),
-    gulpSequence = require('gulp-sequence').use(gulp),
+    gulpSequence = require('gulp-sequence'),
     autoprefixer = require('gulp-autoprefixer');
 
-var srcDir = './app/',
-    dstDir = './dist/',
-    tmpDir = './.tmp/';
-    
+var srcDir = 'app/',
+    dstDir = 'dist/',
+    tmpDir = '_tmp/';
+
 // Fix the tasks run in parallel
 gulp.task('serve', gulpSequence('clean:tmp', ['sass', 'js'], 'html', 'watch'));
 
@@ -31,7 +33,7 @@ gulp.task('watch', function() {
         server: {
             baseDir: tmpDir,
             routes:{ //URL匹配,值是文件夹要提供的（相对于当前的工作目录）
-                "/.tmp": ".tmp",
+                "/_tmp": "_tmp",
                 "/bower_components": "bower_components"
             }
         },
@@ -43,7 +45,17 @@ gulp.task('watch', function() {
     gulp.watch(srcDir+"scss/**/*.scss", ['sass']);
     gulp.watch("bower.json", ['html']);
     gulp.watch(srcDir+"*.html", ['html']);
-    gulp.watch(tmpDir+"*.html").on('change', browserSync.reload);
+    // console.log(gulp.watch(srcDir+"*.html", ['html']))
+    watch(tmpDir+'*.html').on('change',function(e){
+        // console.log('refresh!')
+        browserSync.reload();
+    })
+    console.log(gulp.watch(tmpDir+'*.html'))
+    // gulp.watch(tmpDir+"*.html").on('change', browserSync.reload);
+    // gulp.watch(tmpDir+"index.html",function(event){
+    //     console.log('tmp'+event.type)
+    // });
+    
 });
 
 <!-- Begin: sass task-->
