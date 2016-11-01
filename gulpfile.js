@@ -33,11 +33,12 @@ gulp.task('watch', function() {
         server: {
             baseDir: tmpDir,
             routes:{ //URL匹配,值是文件夹要提供的（相对于当前的工作目录）
-                "/_tmp": "_tmp",
+                "/_tmp": tmpDir,
+                "/app": srcDir,
                 "/bower_components": "bower_components"
             }
         },
-        //在Chrome浏览器中打开网站 
+        //在Chrome浏览器中打开网站
         browser: "chrome"
     });
 
@@ -50,12 +51,12 @@ gulp.task('watch', function() {
         // console.log('refresh!')
         browserSync.reload();
     })
-    console.log(gulp.watch(tmpDir+'*.html'))
+    // console.log(gulp.watch(tmpDir+'*.html'))
     // gulp.watch(tmpDir+"*.html").on('change', browserSync.reload);
     // gulp.watch(tmpDir+"index.html",function(event){
     //     console.log('tmp'+event.type)
     // });
-    
+
 });
 
 <!-- Begin: sass task-->
@@ -126,7 +127,7 @@ gulp.task('js-watch', ['js'], function (done) {
 });
 <!-- End: js task-->
 
-// inject bower components 
+// inject bower components
 gulp.task('html', function(){
     gulp.src([srcDir+'*.html'])
        .pipe(wiredep({
@@ -177,7 +178,7 @@ gulp.task('clean:tmp', function(){
     //     // console.log('Delete:', path.join('\n'));
     // });
     return gulp.src(tmpDir, {read: false})
-              .pipe(clean());
+              .pipe(clean({force:true}));
 });
 // Delete dist files task
 gulp.task('clean:dist', function(){

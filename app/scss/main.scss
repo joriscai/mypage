@@ -1,10 +1,100 @@
-/*! 
+/*!
  * main.css
  * 重要注释
  */
 @charset "utf-8";
-/* body */
-body{
-	padding: 15px;
-	transform: rotate(45deg);
+@import "../../bower_components/font-awesome/css/font-awesome.min.css";
+$bg-color: #00BCD4;
+// *base css/
+@mixin margin($dir:left, $num:10) {
+	margin-#{$dir}:$num+px;
+}
+//* 导航栏 */
+header {
+	padding-top: 10px;
+	color: white;
+	// background: rgba(0,0,0,0.7);
+	background: $bg-color;
+	position: fixed;
+	width: 100%;
+	a{
+		color: white;
+		&:hover,.active{
+			text-decoration: none;
+			color: $bg-color;
+		}
+	}
+	nav{
+		margin-right: 15px;
+		line-height: 4em;
+		font-size: 1.2em;
+		ul{
+			margin: 0;
+			li{
+				padding: 0 10px 0!important;
+			}
+		}
+	}
+	.logo{
+		margin-left: 15px;
+		font-size: 2.7em;
+		a{
+			color: white;
+		}
+	}
+
+	.actions{
+		float: right;
+		padding-bottom: 100px;
+		@include margin(right);
+		.fa{
+			@include margin(right);
+		}
+		a.first{
+			@include margin(right,15);
+		}
+		a.btn{
+			background: #008fa1;
+			color: #fff;
+			padding: 8px 15px;
+			border-radius: 2px;
+			box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.4);
+			text-transform: uppercase;
+			&:hover{
+				background: #00a5bb;
+				color: white;
+			}
+		}
+	}
+
+	.intro{
+		background: #00a5bb;
+		img{
+			margin: 0 auto;
+			display: block;
+			margin-top: -50px;
+			@include margin(bottom,30);
+			border-radius: 50%;
+			border: 2px solid white;
+			outline:none;
+		}
+		h1{
+			font-size: 48px;
+		}
+		.title{
+			font-size: 28px;
+			font-weight: 300;
+			color: rgba(255, 255, 255, 0.8);
+			margin-bottom: 30px;
+		}
+		.brief{
+			width: 800px;
+			margin: 0 auto;
+		}
+	}
+
+}
+#content{
+
+	width: 100%;
 }
