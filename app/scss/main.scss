@@ -18,23 +18,13 @@ header {
 	position: fixed;
 	width: 100%;
 	a{
-		color: white;
-		&:hover,.active{
+		color: rgba(255, 255, 255, 0.7);
+		&:hover,.active,&:visited{
 			text-decoration: none;
-			color: $bg-color;
+			color: white;
 		}
 	}
-	nav{
-		margin-right: 15px;
-		line-height: 4em;
-		font-size: 1.2em;
-		ul{
-			margin: 0;
-			li{
-				padding: 0 10px 0!important;
-			}
-		}
-	}
+
 	.logo{
 		margin-left: 15px;
 		font-size: 2.7em;
@@ -69,6 +59,7 @@ header {
 
 	.intro{
 		background: #00a5bb;
+		padding-bottom: 30px;
 		img{
 			margin: 0 auto;
 			display: block;
@@ -82,14 +73,46 @@ header {
 			font-size: 48px;
 		}
 		.title{
-			font-size: 28px;
+			font-size: 25px;
 			font-weight: 300;
+			padding-top: 10px;
 			color: rgba(255, 255, 255, 0.8);
 			margin-bottom: 30px;
 		}
 		.brief{
 			width: 800px;
 			margin: 0 auto;
+			font-size: 19px;
+			text-align: center;
+		}
+	}
+
+	.contact-info{
+		padding: 30px 0;
+		background: #008fa1;
+		font-size: 17px;
+		a:hover{
+			text-decoration: underline;
+		}
+		ul{
+			margin-bottom: 0px;
+		}
+		li{
+			padding: 0 20px;
+			i{
+				padding-right: 10px;
+			}
+		}
+	}
+	nav{
+		line-height: 4em;
+		font-size: 1.2em;
+		background: #007888;
+		ul{
+			margin: 0;
+			li{
+				padding: 0 30px 0!important;
+			}
 		}
 	}
 
