@@ -39,7 +39,8 @@ gulp.task('watch', function() {
             }
         },
         //在Chrome浏览器中打开网站
-        browser: "chrome"
+        browser: "chrome",
+		scrollProportionally: false   //视口同步到顶部位置,default:true
     });
 
     gulp.watch(srcDir+"js/**/*.js", ['js-watch']);
