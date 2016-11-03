@@ -40,7 +40,8 @@ gulp.task('watch', function() {
         },
         //在Chrome浏览器中打开网站
         browser: "chrome",
-		scrollProportionally: false   //视口同步到顶部位置,default:true
+		scrollProportionally: false,   //视口同步到顶部位置,default:true
+		injectChanges: false  //不要尝试注入，只是做一个页面刷新，解决CSS注入页面回到顶部
     });
 
     gulp.watch(srcDir+"js/**/*.js", ['js-watch']);
