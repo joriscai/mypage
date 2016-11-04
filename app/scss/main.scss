@@ -4,21 +4,22 @@
  */
 @charset "utf-8";
 @import "../../bower_components/font-awesome/css/font-awesome.min.css";
-$bg-color: #00BCD4;
+$timeline-cl: #00BCD4;
+$bg-color: #e8e9e9;
 // *base css/
 @mixin margin($dir:left, $num:10) {
 	margin-#{$dir}:$num+px;
 }
 html body{
-	background: #dddddd;
-	background: #e8e9e9;
+	// background: #dddddd;
+	background: $bg-color;
 }
 //* 导航栏 */
 header {
 	padding-top: 10px;
 	color: white;
 	// background: rgba(0,0,0,0.7);
-	background: $bg-color;
+	background: $timeline-cl;
 	width: 100%;
 	a{
 		color: rgba(255, 255, 255, 0.6);
@@ -128,24 +129,60 @@ header {
 	width: 100%;
 	color: #13464f;
 	.c-box{
-		padding: 40px 0;
+		padding: 50px;
 		border-bottom: 1px solid #9da1a2;
-		display: flex;
 		span{
 			&.title,&.others{
-				flex: 1;
+				width: 200px;
 			}
 			&.title{
-				margin: 0 50px;
+				margin-right: 50px;
 			}
 			display: inline-block;
 			margin: 0;
 			vertical-align: top;
-			flex: 2;
 		}
 		.text-box{
 			display: inline-block;
-			// line-height: 2em;
+		}
+		.timeline{
+			border-left: 3px solid $timeline-cl;
+			width: auto;
+		    position: relative;
+		    padding: 0 30px;
+			.item{
+				position: relative;
+				&:before,&:after{
+					content: "";
+					position: absolute;
+					display: inline-block;
+					background-clip: padding-box;
+					border-radius: 50%;
+				}
+				&:before{
+					left: -42px;
+					top: 0;
+					width: 22px;
+					height: 22px;
+					background: $bg-color;
+					border: 3px solid $timeline-cl;
+				}
+				&:after {
+					left: -36px;
+					top: 6px;
+					width: 10px;
+					height: 10px;
+					background: $timeline-cl;
+					z-index: 10;
+				}
+				@at-root .job-meta{
+					.office{
+						position: absolute;
+						right: 20px;
+						top:0px;
+					}
+				}
+			}
 		}
 	}
 }
