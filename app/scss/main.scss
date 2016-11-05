@@ -36,6 +36,9 @@ $bg-color: #e8e9e9;
 		top: -$len+px;
 	}
 }
+.container{
+	max-width: 1080px;
+}
 html body{
 	// background: #dddddd;
 	background: $bg-color;
@@ -179,6 +182,7 @@ header {
 			margin-left: 200px;
 			.item{
 				position: relative;
+				padding-bottom: 40px;
 				&:before,&:after{
 					content: "";
 					position: absolute;
@@ -216,11 +220,21 @@ header {
 					}
 				}
 				@at-root .job-meta{
+					padding-bottom: 10px;
+					.title{
+						font-weight: bold;
+						font-size: 21px;
+					}
 					.office{
 						position: absolute;
 						right: 20px;
-						top:0px;
+						top: 8px;
+						i{
+							padding-right: 5px;
+						}
 					}
+				}
+				@at-root .job-desx{
 				}
 			}
 		}
