@@ -10,6 +10,32 @@ $bg-color: #e8e9e9;
 @mixin margin($dir:left, $num:10) {
 	margin-#{$dir}:$num+px;
 }
+@mixin triHor($dir:left, $tran:5, $len:5, $cl:black, $dis:0) {
+	content: '';
+	border-top: $tran+px solid transparent;/*方框上部分背景颜色为透明*/
+	border-bottom: $tran+px solid transparent;/*方框下部分背景为透明*/
+	border-#{$dir}: $len+px solid $cl;/*箭头背景颜色*/
+	position: absolute;/*绝对定位1*/
+	top: $dis+px;/*距离顶部位置偏移量2*/
+	@if $dir == left {
+		right: -$len+px;/*距离左边位置偏移量3*/ /*123都是控制显示位置的*/
+	}@else{
+		left: -$len+px;
+	}
+}
+@mixin triVer($dir:top, $tran:5, $len:5, $cl:black, $dis:0) {
+	content: '';
+	border-left: $tran+px solid transparent;/*方框上部分背景颜色为透明*/
+	border-right: $tran+px solid transparent;/*方框下部分背景为透明*/
+	border-#{$dir}: $len+px solid $cl;/*箭头背景颜色*/
+	position: absolute;/*绝对定位1*/
+	left: $dis+px;/*距离顶部位置偏移量2*/
+	@if $dir == top {
+		bottom: -$len+px;/*距离左边位置偏移量3*/ /*123都是控制显示位置的*/
+	}@else{
+		top: -$len+px;
+	}
+}
 html body{
 	// background: #dddddd;
 	background: $bg-color;
@@ -150,6 +176,7 @@ header {
 			width: auto;
 		    position: relative;
 		    padding: 0 30px;
+			margin-left: 200px;
 			.item{
 				position: relative;
 				&:before,&:after{
@@ -174,6 +201,19 @@ header {
 					height: 10px;
 					background: $timeline-cl;
 					z-index: 10;
+				}
+				.time{
+					position: absolute;
+					left: -210px;
+					top: 0px;
+					font-size: 20px;
+    				background: $timeline-cl;
+					color: white;
+					width: 150px;
+					border-radius: 4px;
+					&:before{
+						@include triHor(left, 5, 10, $timeline-cl, 8);
+					}
 				}
 				@at-root .job-meta{
 					.office{
