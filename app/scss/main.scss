@@ -160,21 +160,10 @@ header {
 	.c-box{
 		padding: 50px;
 		border-bottom: 1px solid #9da1a2;
-		span{
-			&.title,&.others{
-				width: 200px;
-			}
-			&.title{
-				margin-right: 50px;
-			}
-			display: inline-block;
-			margin: 0;
-			vertical-align: top;
-		}
 		.text-box{
 			display: inline-block;
 		}
-		.timeline{
+		@at-root .timeline{
 			border-left: 3px solid $timeline-cl;
 			width: auto;
 		    position: relative;
@@ -239,8 +228,20 @@ header {
 			}
 		}
 	}
+	.about{
+		// background: white;
+	}
+	.skill{
+		// background: white;
+	}
+	.contact{
+		border-bottom: 0px;
+	}
 }
 
 footer{
 	padding: 30px;
+	background: #2C3C51;
+	color: white;
+	text-align: center;
 }
