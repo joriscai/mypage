@@ -32,6 +32,8 @@ jspm_packages
 bower_components
 _tmp
 dist
+.idea
+.vscode
 
 # Optional npm cache directory
 .npm
