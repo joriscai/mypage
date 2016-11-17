@@ -1,0 +1,8 @@
+{
+    /*使用jquery编码风格规范*/
+    "preset": "crockford",
+    /*允许一个声明多个变量*/
+    "requireMultipleVarDecl": true,
+    // Report all errors (-1 or null)
+    "maxErrors": null
+}

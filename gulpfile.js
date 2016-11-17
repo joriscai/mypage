@@ -1,7 +1,8 @@
-'use strict';
+"use strict";
 
+// gulp变量
 var gulp = require('gulp'),
-	path = require('path'),
+    path = require('path'),
     del  = require('del'),
     sass = require('gulp-sass'),
     clean = require('gulp-clean'),
@@ -16,10 +17,11 @@ var gulp = require('gulp'),
     plumber = require('gulp-plumber'),
     browserify = require('browserify'),
     sourcemaps = require('gulp-sourcemaps'),
-	browserSync = require('browser-sync').create(),
+    browserSync = require('browser-sync').create(),
     gulpSequence = require('gulp-sequence'),
     autoprefixer = require('gulp-autoprefixer');
 
+// 目录变量
 var srcDir = 'app/',
     dstDir = 'dist/',
     tmpDir = '_tmp/';
@@ -28,11 +30,11 @@ var srcDir = 'app/',
 gulp.task('serve', gulpSequence('clean:tmp', ['sass', 'js'], 'html', 'watch'));
 
 // Static Server + watching scss/html files
-gulp.task('watch', function() {
+gulp.task('watch', function () {
     browserSync.init({
         server: {
             baseDir: tmpDir,
-            routes:{ //URL匹配,值是文件夹要提供的（相对于当前的工作目录）
+            routes: { //URL匹配,值是文件夹要提供的（相对于当前的工作目录）
                 "/_tmp": tmpDir,
                 "/app": srcDir,
                 "/bower_components": "bower_components"
@@ -40,16 +42,16 @@ gulp.task('watch', function() {
         },
         //在Chrome浏览器中打开网站
         browser: "chrome",
-		scrollProportionally: false,   //视口同步到顶部位置,default:true
-		injectChanges: false  //不要尝试注入，只是做一个页面刷新，解决CSS注入页面回到顶部
+        scrollProportionally: false,   //视口同步到顶部位置,default:true
+        injectChanges: false  //不要尝试注入，只是做一个页面刷新，解决CSS注入页面回到顶部
     });
 
-    gulp.watch(srcDir+"js/**/*.js", ['js-watch']);
-    gulp.watch(srcDir+"scss/**/*.scss", ['sass']);
+    gulp.watch(srcDir + "js/**/*.js", ['js-watch']);
+    gulp.watch(srcDir + "scss/**/*.scss", ['sass']);
     gulp.watch("bower.json", ['html']);
-    gulp.watch(srcDir+"*.html", ['html']);
+    gulp.watch(srcDir + "*.html", ['html']);
     // console.log(gulp.watch(srcDir+"*.html", ['html']))
-    watch(tmpDir+'*.html').on('change',function(e){
+    watch(tmpDir + '*.html').on('change', function (e) {
         // console.log('refresh!')
         browserSync.reload();
     })
@@ -61,27 +63,27 @@ gulp.task('watch', function() {
 
 });
 
-<!-- Begin: sass task-->
+// <!-- Begin: sass task-->
 // Compile sass into CSS & auto-inject into browsers
-gulp.task('sass', function() {
-    return gulp.src(srcDir+"scss/*.scss")
+gulp.task('sass', function () {
+    return gulp.src(srcDir + "scss/*.scss")
         .pipe(sass({
                 // includePaths: [tmpDir],
                 outputStyle: 'nested'
-            }).on('error',sass.logError))
+            }).on('error', sass.logError))
         .pipe(autoprefixer({
                 browsers: ['last 3 versions','Android >= 4.0'],
                 cascade: true,
                 remove: true
             })
         )
-        .pipe(gulp.dest(tmpDir+'css'))
+        .pipe(gulp.dest(tmpDir + 'css'))
         .pipe(browserSync.reload({stream: true}));
 });
 
 // Compile sass into CSS & to publish
-gulp.task('sass:dist', function() {
-    return gulp.src(srcDir+"scss/*.scss")
+gulp.task('sass:dist', function () {
+    return gulp.src(srcDir + "scss/*.scss")
         .pipe(autoprefixer({
                 browsers: ['last 2 versions','Android >= 4.0'],
                 cascade: true,
@@ -91,34 +93,34 @@ gulp.task('sass:dist', function() {
         .pipe(concatCss('main.css'))
         .pipe(sass({
                 outputStyle: 'compressed'
-            }).on('error',sass.logError))
+            }).on('error', sass.logError))
         .pipe(rename({
                 extname: '.min.css'
             })
         )
-        .pipe(gulp.dest(dstDir+"css"));
+        .pipe(gulp.dest(dstDir + "css"));
 });
-<!-- End: sass task-->
+// <!-- End: sass task-->
 
-<!-- Begin: js task-->
+// <!-- Begin: js task-->
 // copy JS files as temp files.
 gulp.task('js', function () {
-    return gulp.src(srcDir+'js/**/*.js')
+    return gulp.src(srcDir + 'js/**/*.js')
         // .pipe(concat('main.js', {newLine: ';'}))
-        .pipe(gulp.dest(tmpDir+'js'));
+        .pipe(gulp.dest(tmpDir + 'js'));
 });
 
 // process JS files and compress its.
-gulp.task('js:dist', function(){
-    return gulp.src(srcDir+'js/**/*.js')
+gulp.task('js:dist', function () {
+    return gulp.src(srcDir + 'js/**/*.js')
         // .pipe(browserify())
         .pipe(uglify({
             mangle: true,//类型：Boolean 默认：true 是否修改变量名
             compress: true,//类型：Boolean 默认：true 是否完全压缩
             preserveComments: 'all' //保留所有注释
-          })
+        })
         )
-        .pipe(gulp.dest(dstDir+'js'));
+        .pipe(gulp.dest(dstDir + 'js'));
 });
 
 // create a task that ensures the `js` task is complete before
@@ -127,11 +129,11 @@ gulp.task('js-watch', ['js'], function (done) {
     browserSync.reload();
     done();
 });
-<!-- End: js task-->
+// <!-- End: js task-->
 
 // inject bower components
-gulp.task('html', function(){
-    gulp.src([srcDir+'*.html'])
+gulp.task('html', function () {
+    gulp.src([srcDir + '*.html'])
        .pipe(wiredep({
             optional: 'configuration',
             goes: 'here'
@@ -141,8 +143,8 @@ gulp.task('html', function(){
 });
 
 // Compress the html files
-gulp.task('html:dist', function(){
-    gulp.src([srcDir+'*.html'])
+gulp.task('html:dist', function () {
+    gulp.src([srcDir + '*.html'])
        // .pipe(wiredep({
        //      optional: 'configuration',
        //      goes: 'here'
@@ -159,31 +161,31 @@ gulp.task('html:dist', function(){
 // });
 
 // Build a deploy version
-gulp.task('build', ['clean:dist', 'html:dist', 'sass:dist', 'js:dist'], function(){
+gulp.task('build', ['clean:dist', 'html:dist', 'sass:dist', 'js:dist'], function () {
 
 });
 
 // Build a deploy version & testing
-gulp.task('build:watch', ['build'], function(){
+gulp.task('build:watch', ['build'], function () {
 
 });
 
 // Delete temp & dist files task
-gulp.task('clean', function(){
+gulp.task('clean', function () {
     // del([tmpDir, dstDir], {force: true});
     return gulp.src([tmpDir, dstDir], {read: false})
               .pipe(clean());
 });
 // Delete temp files task
-gulp.task('clean:tmp', function(){
+gulp.task('clean:tmp', function () {
     // del([tmpDir], {dryRun: true, force: true}).then(function(path){
     //     // console.log('Delete:', path.join('\n'));
     // });
     return gulp.src(tmpDir, {read: false})
-              .pipe(clean({force:true}));
+              .pipe(clean({force: true}));
 });
 // Delete dist files task
-gulp.task('clean:dist', function(){
+gulp.task('clean:dist', function () {
     // del([dstDir], {force: true});
     return gulp.src(dstDir, {read: false})
               .pipe(clean());
