@@ -351,8 +351,25 @@ header {
 }
 
 footer{
-	padding: 30px;
+	padding: 0 0 10px;
 	background: #2C3C51;
 	color: white;
 	text-align: center;
+	overflow: hidden;
+	.social{
+		a,a:hover,a:active,a:visited{
+			color: white;
+			text-decoration: none;
+		}
+		// a:hover > i{
+		// 	animation: bounceInDown 0.8s;
+		// 	animation-timing-function: ease-in;
+		// 	animation-iteration-count:1;
+		// }
+		.social-icon{
+			margin: 0px 8px;
+			line-height: 2em;
+		}
+		font-size: 2.3em;
+	}
 }
