@@ -27,7 +27,7 @@ var srcDir = 'app/',
     tmpDir = '_tmp/';
 
 // Fix the tasks run in parallel
-gulp.task('serve', gulpSequence('clean:tmp', ['sass', 'js'], 'html', 'watch'));
+gulp.task('serve', gulpSequence('clean:tmp', ['sass', 'js', 'img'], 'html', 'watch'));
 
 // Static Server + watching scss/html files
 gulp.task('watch', function () {
@@ -159,6 +159,18 @@ gulp.task('html:dist', function () {
 //        .pipe(wiredep())
 //        .pipe(gulp.dest(dstDir+'css'));
 // });
+
+// process Image
+gulp.task('img', function () {
+    gulp.src([srcDir + 'images/**/*'])
+       .pipe(gulp.dest(tmpDir + 'images/'));
+});
+
+// Compress images
+gulp.task('img:dist', function () {
+    gulp.src([srcDir + 'images/**/*'])
+       .pipe(gulp.dest(tmpDir));
+});
 
 // Build a deploy version
 gulp.task('build', ['clean:dist', 'html:dist', 'sass:dist', 'js:dist'], function () {
