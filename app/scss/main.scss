@@ -318,6 +318,8 @@ header {
 			}
 			.send-to,.contact-msg{
 				position: relative;
+				float: left\9;
+				width: 50%\9;
 				flex: 1;
 			}
 			.send-to{
@@ -331,12 +333,9 @@ header {
 						background-color: #057281;
 					}
 				}
-			}
-			.contact-msg{
-				padding-left: 60px;
 				.or-flag{
 					position: absolute;
-					left: -25px;
+					right: -25px;
 					top: 43%;
 					width: 50px;
 					height: 50px;
@@ -347,6 +346,9 @@ header {
 					border-radius: 50%;
 					background: rgba(0,0,0,.25);
 				}
+			}
+			.contact-msg{
+				padding-left: 60px;
 				.msg-box{
 					padding-bottom: 1.8em;
 				}
@@ -364,7 +366,7 @@ header {
 
 footer{
 	padding: 0 0 10px;
-	background: #2C3C51;
+	background-color: rgb(44,61,82);
 	color: white;
 	text-align: center;
 	overflow: hidden;
