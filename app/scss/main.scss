@@ -43,7 +43,8 @@ html body{
 	// background: #dddddd;
 	background: $bg-color;
 }
-// * css 动画 */
+// * contact msg
+// 	 css 动画 */
 @keyframes bounceInDown
 {
 0%   {top:3px;}
@@ -322,8 +323,9 @@ header {
 				width: 50%\9;
 				flex: 1;
 			}
+			$pad-width: 80px;
 			.send-to{
-				padding-right: 60px;
+				padding-right: $pad-width;
 				input,textarea{
 					resize: vertical;
 				}
@@ -348,7 +350,7 @@ header {
 				}
 			}
 			.contact-msg{
-				padding-left: 60px;
+				padding-left: $pad-width;
 				.msg-box{
 					padding-bottom: 1.8em;
 				}
@@ -357,7 +359,8 @@ header {
 	}
 }
 
-// * css 动画 */
+// * social icons
+// 	 css 动画 */
 @keyframes rotateChange
 {
 	from { transform: rotateY(90deg) scale(0.5); }
