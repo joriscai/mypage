@@ -340,7 +340,7 @@ header {
 					line-height: 1.1;
 					font-size: 42px;
 					border-radius: 50%;
-					background: #00a5bb;
+					background: rgba(0,0,0,.25);
 				}
 				.msg-box{
 					padding-bottom: 1.8em;
@@ -350,6 +350,13 @@ header {
 	}
 }
 
+// * css 动画 */
+@keyframes rotateChange
+{
+	from { transform: rotateY(90deg) scale(0.5); }
+    to { transform: rotateY(0); }
+}
+
 footer{
 	padding: 0 0 10px;
 	background: #2C3C51;
@@ -357,16 +364,16 @@ footer{
 	text-align: center;
 	overflow: hidden;
 	.social{
-		a,a:hover,a:active,a:visited{
+			a,a:hover,a:active,a:visited{
 			color: white;
 			text-decoration: none;
 		}
-		// a:hover > i{
-		// 	animation: bounceInDown 0.8s;
-		// 	animation-timing-function: ease-in;
-		// 	animation-iteration-count:1;
-		// }
 		.social-icon{
+			&:hover > i{
+				animation: rotateChange 0.5s;
+				animation-timing-function: linear;
+				animation-iteration-count:1;
+			}
 			margin: 0px 8px;
 			line-height: 2em;
 		}
