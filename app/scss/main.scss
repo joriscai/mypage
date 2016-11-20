@@ -62,6 +62,8 @@ header {
 	background: $timeline-cl;
 	width: 100%;
 	a{
+		color: white;
+		filter: progid:DXImageTransform.Microsoft.Alpha(opacity=60);
 		color: rgba(255, 255, 255, 0.6);
 		&:hover,.active,&:visited{
 			text-decoration: none;
@@ -128,6 +130,8 @@ header {
 			font-size: 25px;
 			font-weight: 300;
 			padding: 20px;
+			color: white;
+			filter: progid:DXImageTransform.Microsoft.Alpha(opacity=80);
 			color: rgba(255, 255, 255, 0.8);
 		}
 		.brief{
@@ -346,7 +350,10 @@ header {
 					line-height: 1.1;
 					font-size: 42px;
 					border-radius: 50%;
+					background: black;
+					filter: progid:DXImageTransform.Microsoft.Alpha(opacity=25);
 					background: rgba(0,0,0,.25);
+
 				}
 			}
 			.contact-msg{
