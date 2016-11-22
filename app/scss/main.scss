@@ -312,7 +312,19 @@ header {
 	}
 
 	.skill{
-		// background: white;
+		.o-title{
+			padding-bottom: 15px;
+		}
+		.skill-tag{
+			box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+		    padding: 6px 30px;
+		    display: inline-block;
+		    margin-right: 15px;
+		    border: 1px solid #e2e2e2;
+		    margin-bottom: 20px;
+		    font-size: 16px;
+			background: #eee;
+		}
 	}
 	.contact{
 		border-bottom: 0px;
