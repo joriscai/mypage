@@ -4,9 +4,14 @@
  */
 @charset "utf-8";
 @import "../../bower_components/font-awesome/css/font-awesome.min.css";
-$timeline-cl: #00BCD4;
-$bg-color: #e8e9e9;
-// *base css/
+// color variable
+$t-cl: #00BCD4;
+$bg-cl: #e8e9e9;
+$ahover-cl:#00a5bb;
+$area-cl:#5686D6;
+
+
+// mixin method
 @mixin margin($dir:left, $num:	10) {
 	margin-#{$dir}:$num+px;
 }
@@ -36,12 +41,14 @@ $bg-color: #e8e9e9;
 		top: -$len+px;
 	}
 }
+
+// *base css/
 .container{
 	max-width: 1080px;
 }
 html body{
-	// background: #dddddd;
-	background: $bg-color;
+
+	background: $bg-cl;
 }
 // * contact msg
 // 	 css 动画 */
@@ -54,12 +61,11 @@ html body{
 75%  {top:20px;}
 100% {top:3px;}
 }
-//* 导航栏 */
+//* 头部 */
 header {
 	padding-top: 10px;
 	color: white;
-	// background: rgba(0,0,0,0.7);
-	background: $timeline-cl;
+	background: $t-cl;
 	width: 100%;
 	a{
 		color: white;
@@ -78,8 +84,8 @@ header {
 			color: white;
 		}
 	}
-
-	.actions{
+	// 头部下载简历区
+	@at-root .top-actions{
 		float: right;
 		padding-bottom: 125px;
 		padding-top: 10px;
@@ -98,21 +104,18 @@ header {
 			box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.4);
 			text-transform: uppercase;
 			&:hover{
-				background: #00a5bb;
+				background: $ahover-cl;
 				color: white;
 			}
 		}
 	}
-
-	.intro{
-		background: #00a5bb;
+	// 简单介绍
+	@at-root .intro{
+		background: $ahover-cl;
 		padding-bottom: 10px;
 		position: relative;
 		padding-top: 90px;
 		img{
-			// margin: 0 auto;
-			// display: block;
-			// margin-top: -80px;
 			left: 50%\9;
 			position: absolute;
 			top: -80px;
@@ -126,51 +129,34 @@ header {
 		h1{
 			font-size: 48px;
 		}
-		.title{
+		.brief{
 			font-size: 25px;
 			font-weight: 300;
-			padding: 20px;
+			padding: 18px 0;
 			color: white;
 			filter: progid:DXImageTransform.Microsoft.Alpha(opacity=80);
 			color: rgba(255, 255, 255, 0.8);
 		}
-		.brief{
-			width: 800px;
-			margin: 0 auto;
-			font-size: 19px;
-			text-align: center;
+		.apply-job{
+			font-size: 18px;
+			color: white;
+			filter: progid:DXImageTransform.Microsoft.Alpha(opacity=80);
+			color: rgba(255, 255, 255, 0.8);
 		}
-		.website{
+
+		.email{
 			font-size: 16px;
-			padding: 5px 0 20px;
+			padding: 20px 0;
 			i{
 				padding-right: 8px;
 			}
 		}
 	}
 
-	// .contact-info{
-	// 	padding: 30px 0;
-	// 	background: #008fa1;
-	// 	font-size: 17px;
-	// 	a:hover{
-	// 		text-decoration: underline;
-	// 	}
-	// 	ul{
-	// 		margin-bottom: 0px;
-	// 	}
-	// 	li{
-	// 		padding: 0 20px;
-	// 		i{
-	// 			padding-right: 10px;
-	// 		}
-	// 	}
-	// }
-	nav{
+	@at-root nav{
 		line-height: 4em;
 		font-size: 1em;
 		background: #007888;
-		// background: #008fa1;
 		box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
 		ul{
 			margin: 0;
@@ -186,13 +172,12 @@ header {
 	color: #13464f;
 	// 关于我
 	.about-me{
-		// background: white;
-		.about{
+		@at-root .about{
 			position: relative;
 			font-size: 17px;
 			padding: 10px 20px;
 			width: 70%;
-			margin: 30px auto 40px;
+			margin: 30px auto 0px;
 			p{
 				line-height: 2.5em;
 			}
@@ -205,24 +190,24 @@ header {
 			&:before{
 				top: 0;
     			left: 0;
-				border-top: 2px solid #5686D6;
-    			border-left: 2px solid #5686D6;
+				border-top: 2px solid $area-cl;
+    			border-left: 2px solid $area-cl;
 			}
 			&:after{
 				bottom: 0;
     			right: 0;
-				border-bottom: 2px solid #5686D6;
-    			border-right: 2px solid #5686D6;
+				border-bottom: 2px solid $area-cl;
+    			border-right: 2px solid $area-cl;
 			}
 		}
-		.contact-info{
+		@at-root .simple-contact{
 			font-size: 18px;
 			overflow: hidden;
 			li{
 				position: relative;
-				margin: 0 25px;
+				margin: 40px 17px 0;
 				a{
-					padding-left: 23px;
+					padding-left: 22px;
 				}
 			}
 			li:hover > i{
@@ -237,21 +222,24 @@ header {
 			}
 		}
 	}
-	// 经验
+
 	.c-box{
 		padding: 50px;
 		border-bottom: 1px solid #9da1a2;
 		.text-box{
 			display: inline-block;
 		}
-		@at-root .timeline{
-			border-left: 3px solid $timeline-cl;
+	}
+	// 经验
+	.exp{
+		.timeline{
+			border-left: 3px solid $t-cl;
 			width: auto;
 		    position: relative;
-		    padding: 0 30px;
+		    padding: 0 35px;
 			margin-left: 200px;
 			margin-top: 30px;
-			.item{
+			@at-root .item{
 				position: relative;
 				padding-bottom: 40px;
 				&:before,&:after{
@@ -262,32 +250,32 @@ header {
 					border-radius: 50%;
 				}
 				&:before{
-					left: -42px;
+					left: -47px;
 					top: 0;
 					width: 22px;
 					height: 22px;
-					background: $bg-color;
-					border: 3px solid $timeline-cl;
+					background: $bg-cl;
+					border: 3px solid $t-cl;
 				}
 				&:after {
-					left: -36px;
+					left: -41px;
 					top: 6px;
 					width: 10px;
 					height: 10px;
-					background: $timeline-cl;
+					background: $t-cl;
 					z-index: 10;
 				}
 				.time{
 					position: absolute;
-					left: -210px;
+					left: -220px;
 					top: 0px;
 					font-size: 20px;
-    				background: $timeline-cl;
+    				background: $t-cl;
 					color: white;
 					width: 150px;
 					border-radius: 4px;
 					&:before{
-						@include triHor(left, 5, 10, $timeline-cl, 8);
+						@include triHor(left, 5, 10, $t-cl, 8);
 					}
 				}
 				@at-root .job-meta{
@@ -310,7 +298,7 @@ header {
 			}
 		}
 	}
-
+	//技能
 	.skill{
 		.o-title{
 			padding-bottom: 15px;
@@ -326,9 +314,10 @@ header {
 			background: #eee;
 		}
 	}
+	// 联系方式
 	.contact{
 		border-bottom: 0px;
-        .contact-box{
+        @at-root .contact-box{
             display: flex;
 			.title{
 				padding-bottom: 0.8em;
@@ -346,7 +335,7 @@ header {
 					resize: vertical;
 				}
 				.btn{
-					background-color: #00a5bb;
+					background-color: $ahover-cl;
 					&:hover,&:active{
 						background-color: #057281;
 					}
@@ -388,11 +377,12 @@ header {
 
 footer{
 	padding: 0 0 10px;
-	background-color: rgb(44,61,82);
+	background-color: #2c3d52;
 	color: white;
 	text-align: center;
 	overflow: hidden;
-	.social{
+	@at-root .social{
+		font-size: 2.3em;
 			a,a:hover,a:active,a:visited{
 			color: white;
 			text-decoration: none;
@@ -406,6 +396,6 @@ footer{
 			margin: 0px 8px;
 			line-height: 2em;
 		}
-		font-size: 2.3em;
+
 	}
 }
