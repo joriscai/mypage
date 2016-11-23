@@ -199,4 +199,19 @@
 
     // 使用刚指定的配置项和数据显示图表。
     myChart.setOption(option);
+
+    // nav layout
+    flag = 1;
+    nav = $('nav');
+    navPos = $('header').height();
+    $(window).on('scroll', function () {
+        // console.log(navPos);
+        if ($(this).scrollTop() > navPos && flag) {
+            nav.addClass('navFixed');
+            flag = 0;
+        }else if ($(this).scrollTop() < navPos) {
+            nav.removeClass('navFixed');
+            flag = 1;
+        }
+    })
 })();

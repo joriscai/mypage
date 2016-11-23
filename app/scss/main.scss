@@ -165,6 +165,23 @@ header {
 			}
 		}
 	}
+	// * nav fadeout
+	// 	 css 动画 */
+	@keyframes navFadeout
+	{
+		from { top: -70px; }
+	    to { top: 0px; }
+	}
+	.navFixed{
+		position: fixed;
+		top: 0px;
+		left: 0;
+		width: 100%;
+		z-index: 100;
+		animation: navFadeout 0.8s;
+		animation-timing-function: linear;
+		animation-iteration-count:1;
+	}
 }
 
 #content{
@@ -354,7 +371,6 @@ header {
 					background: black;
 					filter: progid:DXImageTransform.Microsoft.Alpha(opacity=25);
 					background: rgba(0,0,0,.25);
-
 				}
 			}
 			.contact-msg{
@@ -396,6 +412,5 @@ footer{
 			margin: 0px 8px;
 			line-height: 2em;
 		}
-
 	}
 }
