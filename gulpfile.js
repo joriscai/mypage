@@ -15,6 +15,7 @@ var gulp = require('gulp'),
     source = require('vinyl-source-stream'),
     buffer = require('vinyl-buffer'),
     useref = require('gulp-useref'),
+    htmlmin = require('gulp-htmlmin'),
     concatCss = require('gulp-concat-css'),
     wiredep = require('wiredep').stream,
     replace = require('gulp-replace'),
@@ -59,18 +60,11 @@ gulp.task('watch', function () {
     gulp.watch(srcDir + "scss/**/*.scss", ['sass']);
     gulp.watch("bower.json", ['html']);
     gulp.watch(srcDir + "*.html", ['html']);
-    // console.log(gulp.watch(srcDir+"*.html", ['html']))
     watch(tmpDir + '*.html').on('change', function (e) {
-        // console.log('refresh!')
         browserSync.reload();
     })
-    // console.log(gulp.watch(tmpDir+'*.html'))
-    // gulp.watch(tmpDir+"*.html").on('change', browserSync.reload);
-    // gulp.watch(tmpDir+"index.html",function(event){
-    //     console.log('tmp'+event.type)
-    // });
-
 });
+
 
 // <!-- Begin: sass task-->
 // Compile sass into CSS & auto-inject into browsers
@@ -88,7 +82,6 @@ gulp.task('sass', function () {
         .pipe(gulp.dest(tmpDir + 'css'))
         .pipe(browserSync.reload({stream: true}));
 });
-
 // Compile sass into CSS & to publish
 gulp.task('sass:dist', function () {
     return gulp.src(srcDir + "scss/*.scss")
@@ -113,6 +106,7 @@ gulp.task('sass:dist', function () {
 });
 // <!-- End: sass task-->
 
+
 // <!-- Begin: js task-->
 // copy JS files as temp files.
 gulp.task('js', function () {
@@ -120,10 +114,8 @@ gulp.task('js', function () {
         .bundle()
         .pipe(source('index.js')) // gives streaming vinyl file object
         .pipe(buffer()) // <----- convert from streaming to buffered vinyl file object
-        // .pipe(uglify())  // now gulp-uglify works
         .pipe(gulp.dest(tmpDir + 'js/'));
 });
-
 // process JS files and compress its.
 gulp.task('js:dist', ['js'], function () {
     return gulp.src(tmpDir + '**/*.js')
@@ -138,7 +130,6 @@ gulp.task('js:dist', ['js'], function () {
         .pipe(rev.manifest())
         .pipe(gulp.dest(tmpDir + 'rev/js'))
 });
-
 // create a task that ensures the `js` task is complete before
 // reloading browsers
 gulp.task('js-watch', ['js'], function (done) {
@@ -147,6 +138,8 @@ gulp.task('js-watch', ['js'], function (done) {
 });
 // <!-- End: js task-->
 
+
+// <!-- Begin: Html task-->
 // inject bower components
 gulp.task('html', function () {
     gulp.src([srcDir + '*.html'])
@@ -157,13 +150,11 @@ gulp.task('html', function () {
        )
        .pipe(gulp.dest(tmpDir));
 });
-
 var replaceThis = {
     "../bower_components/echarts/dist/echarts.min.js": "http://cdn.bootcss.com/echarts/3.3.1/echarts.min.js",
     "../bower_components/bootstrap/dist/css/bootstrap.min.css": "http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css",
     "../bower_components/font-awesome/css/font-awesome.min.css": "http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"
 };
-
 // handle the build path and introduce file version to html file
 gulp.task('html:dist', ['js:dist', 'sass:dist', 'html'], function () {
     return gulp.src([tmpDir + 'rev/**/*.json', tmpDir + '*.html'])
@@ -172,10 +163,17 @@ gulp.task('html:dist', ['js:dist', 'sass:dist', 'html'], function () {
         .pipe(replace('../_tmp', '.'))
         // cdn
         .pipe(replaceAssets(replaceThis))
+        .pipe(htmlmin({
+            ignoreCustomComments: [/<!--(\[|<)[\s\S]*?-->/],
+            removeComments: true,//清除HTML注释
+            collapseWhitespace: true,//压缩HTML
+            collapseBooleanAttributes: true,//省略布尔属性的值 <input checked="true"/> ==> <input />
+            removeEmptyAttributes: true //删除所有空格作属性值 <input id="" /> ==> <input />
+        })
+        )
         .pipe(gulp.dest(dstDir));
 });
-
-
+// <!-- End: Html task-->
 
 // copy the bower dependencies to the build path
 gulp.task('bower-css', function () {
@@ -190,64 +188,39 @@ gulp.task('bower-js', function () {
 })
 gulp.task('bower', ['bower-css', 'bower-js'])
 
-// // Compress the html files
-// gulp.task('html:dist', function () {
-//     gulp.src([srcDir + '*.html'])
-//        // .pipe(wiredep({
-//        //      optional: 'configuration',
-//        //      goes: 'here'
-//        //  })
-//        // )
-//        .pipe(gulp.dest(dstDir));
-// });
-
-// inject bower components
-// gulp.task('wiredep', function () {
-//     gulp.src(srcDir+'styles/*.scss')
-//        .pipe(wiredep())
-//        .pipe(gulp.dest(dstDir+'css'));
-// });
 
 // process Image
 gulp.task('img', function () {
     gulp.src([srcDir + 'images/**/*'])
        .pipe(gulp.dest(tmpDir + 'images/'));
 });
-
 // Compress images
 gulp.task('img:dist', function () {
     gulp.src([srcDir + 'images/**/*'])
        .pipe(gulp.dest(dstDir + 'images/'));
 });
 
+
 // Build a deploy version
 gulp.task('build', gulpSequence('clean', ['img:dist'], 'html:dist'));
-// gulp.task('build', ['clean:dist', 'html:dist', 'sass:dist', 'js:dist'], function () {
-//
-// });
-
 // Build a deploy version & testing
 gulp.task('build:watch', ['build'], function () {
 
 });
 
+
 // Delete temp & dist files task
 gulp.task('clean', function () {
-    // del([tmpDir, dstDir], {force: true});
     return gulp.src([tmpDir, dstDir], {read: false})
               .pipe(clean());
 });
 // Delete temp files task
 gulp.task('clean:tmp', function () {
-    // del([tmpDir], {dryRun: true, force: true}).then(function(path){
-    //     // console.log('Delete:', path.join('\n'));
-    // });
     return gulp.src(tmpDir, {read: false})
               .pipe(clean({force: true}));
 });
 // Delete dist files task
 gulp.task('clean:dist', function () {
-    // del([dstDir], {force: true});
     return gulp.src(dstDir, {read: false})
               .pipe(clean());
 });
