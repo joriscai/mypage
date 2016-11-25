@@ -83,22 +83,16 @@ gulp.task('sass', function () {
         .pipe(browserSync.reload({stream: true}));
 });
 // Compile sass into CSS & to publish
-gulp.task('sass:dist', function () {
-    return gulp.src(srcDir + "scss/*.scss")
-        .pipe(sass({
-            outputStyle: 'compressed'
-        }).on('error', sass.logError))
-        .pipe(autoprefixer({
-                browsers: ['last 3 versions','Android >= 4.0'],
-                cascade: true,
-                remove: true
-            })
-        )
+gulp.task('sass:dist', ['sass'], function () {
+    return gulp.src(tmpDir + "css/**/*.css")
         .pipe(concatCss('main.css'))
         .pipe(rename({
                 extname: '.min.css'
             })
         )
+        .pipe(sass({
+            outputStyle: 'compressed'
+        }).on('error', sass.logError))
         .pipe(gulp.dest(dstDir + "css"))
         .pipe(rev())
         .pipe(rev.manifest())
@@ -122,7 +116,7 @@ gulp.task('js:dist', ['js'], function () {
         .pipe(uglify({
             mangle: true,//类型：Boolean 默认：true 是否修改变量名
             compress: true,//类型：Boolean 默认：true 是否完全压缩
-            preserveComments: 'all' //保留所有注释
+            preserveComments: 'license' //保留所有注释
         })
         )
         .pipe(gulp.dest(dstDir))
@@ -202,18 +196,23 @@ gulp.task('img:dist', function () {
 
 
 // Build a deploy version
-gulp.task('build', gulpSequence('clean', ['img:dist'], 'html:dist'));
+gulp.task('build', gulpSequence('clean', ['img:dist', 'html:dist']));
 // Build a deploy version & testing
 gulp.task('build:watch', ['build'], function () {
-
+    browserSync.init({
+        server: {
+            baseDir: dstDir,
+            routes: { //URL匹配,值是文件夹要提供的（相对于当前的工作目录）
+            }
+        },
+        //在Chrome浏览器中打开网站
+        browser: "chrome"
+    });
 });
 
 
 // Delete temp & dist files task
-gulp.task('clean', function () {
-    return gulp.src([tmpDir, dstDir], {read: false})
-              .pipe(clean());
-});
+gulp.task('clean', ['clean:tmp', 'clean:dist']);
 // Delete temp files task
 gulp.task('clean:tmp', function () {
     return gulp.src(tmpDir, {read: false})
@@ -222,7 +221,7 @@ gulp.task('clean:tmp', function () {
 // Delete dist files task
 gulp.task('clean:dist', function () {
     return gulp.src(dstDir, {read: false})
-              .pipe(clean());
+              .pipe(clean({force: true}));
 });
 
 // default task
