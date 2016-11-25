@@ -4,21 +4,30 @@
 var gulp = require('gulp'),
     path = require('path'),
     del  = require('del'),
+    rev = require('gulp-rev'),
     sass = require('gulp-sass'),
     clean = require('gulp-clean'),
     watch = require('gulp-watch'),
+    gulpif = require('gulp-if'),
     rename = require('gulp-rename'),
     uglify = require('gulp-uglify'),
     concat = require('gulp-concat'),
+    source = require('vinyl-source-stream'),
+    buffer = require('vinyl-buffer'),
+    useref = require('gulp-useref'),
     concatCss = require('gulp-concat-css'),
     wiredep = require('wiredep').stream,
     replace = require('gulp-replace'),
+    flatten = require('gulp-flatten'),
     sassMap = require('gulp-ruby-sass'),
     plumber = require('gulp-plumber'),
+    cdnizer = require("gulp-cdnizer"),
     browserify = require('browserify'),
     sourcemaps = require('gulp-sourcemaps'),
+    replaceAssets = require('gulp-replace-assets'),
     browserSync = require('browser-sync').create(),
     gulpSequence = require('gulp-sequence'),
+    revCollector = require('gulp-rev-collector'),
     autoprefixer = require('gulp-autoprefixer');
 
 // 目录变量
@@ -68,7 +77,6 @@ gulp.task('watch', function () {
 gulp.task('sass', function () {
     return gulp.src(srcDir + "scss/*.scss")
         .pipe(sass({
-                // includePaths: [tmpDir],
                 outputStyle: 'nested'
             }).on('error', sass.logError))
         .pipe(autoprefixer({
@@ -84,43 +92,51 @@ gulp.task('sass', function () {
 // Compile sass into CSS & to publish
 gulp.task('sass:dist', function () {
     return gulp.src(srcDir + "scss/*.scss")
+        .pipe(sass({
+            outputStyle: 'compressed'
+        }).on('error', sass.logError))
         .pipe(autoprefixer({
-                browsers: ['last 2 versions','Android >= 4.0'],
+                browsers: ['last 3 versions','Android >= 4.0'],
                 cascade: true,
                 remove: true
             })
         )
         .pipe(concatCss('main.css'))
-        .pipe(sass({
-                outputStyle: 'compressed'
-            }).on('error', sass.logError))
         .pipe(rename({
                 extname: '.min.css'
             })
         )
-        .pipe(gulp.dest(dstDir + "css"));
+        .pipe(gulp.dest(dstDir + "css"))
+        .pipe(rev())
+        .pipe(rev.manifest())
+        .pipe(gulp.dest(tmpDir + 'rev/css'))
 });
 // <!-- End: sass task-->
 
 // <!-- Begin: js task-->
 // copy JS files as temp files.
 gulp.task('js', function () {
-    return gulp.src(srcDir + 'js/**/*.js')
-        // .pipe(concat('main.js', {newLine: ';'}))
-        .pipe(gulp.dest(tmpDir + 'js'));
+    return browserify('./app/js/index.js')
+        .bundle()
+        .pipe(source('index.js')) // gives streaming vinyl file object
+        .pipe(buffer()) // <----- convert from streaming to buffered vinyl file object
+        // .pipe(uglify())  // now gulp-uglify works
+        .pipe(gulp.dest(tmpDir + 'js/'));
 });
 
 // process JS files and compress its.
-gulp.task('js:dist', function () {
-    return gulp.src(srcDir + 'js/**/*.js')
-        // .pipe(browserify())
+gulp.task('js:dist', ['js'], function () {
+    return gulp.src(tmpDir + '**/*.js')
         .pipe(uglify({
             mangle: true,//类型：Boolean 默认：true 是否修改变量名
             compress: true,//类型：Boolean 默认：true 是否完全压缩
             preserveComments: 'all' //保留所有注释
         })
         )
-        .pipe(gulp.dest(dstDir + 'js'));
+        .pipe(gulp.dest(dstDir))
+        .pipe(rev())
+        .pipe(rev.manifest())
+        .pipe(gulp.dest(tmpDir + 'rev/js'))
 });
 
 // create a task that ensures the `js` task is complete before
@@ -142,16 +158,48 @@ gulp.task('html', function () {
        .pipe(gulp.dest(tmpDir));
 });
 
-// Compress the html files
-gulp.task('html:dist', function () {
-    gulp.src([srcDir + '*.html'])
-       // .pipe(wiredep({
-       //      optional: 'configuration',
-       //      goes: 'here'
-       //  })
-       // )
-       .pipe(gulp.dest(dstDir));
+var replaceThis = {
+    "../bower_components/echarts/dist/echarts.min.js": "http://cdn.bootcss.com/echarts/3.3.1/echarts.min.js",
+    "../bower_components/bootstrap/dist/css/bootstrap.min.css": "http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css",
+    "../bower_components/font-awesome/css/font-awesome.min.css": "http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"
+};
+
+// handle the build path and introduce file version to html file
+gulp.task('html:dist', ['js:dist', 'sass:dist', 'html'], function () {
+    return gulp.src([tmpDir + 'rev/**/*.json', tmpDir + '*.html'])
+        .pipe(replace('main.css', 'main.min.css'))
+        .pipe(revCollector())
+        .pipe(replace('../_tmp', '.'))
+        // cdn
+        .pipe(replaceAssets(replaceThis))
+        .pipe(gulp.dest(dstDir));
 });
+
+
+
+// copy the bower dependencies to the build path
+gulp.task('bower-css', function () {
+    return gulp.src(['bower_components/**/*.min.css'])
+        .pipe(flatten())
+        .pipe(gulp.dest('dist/css'));
+})
+gulp.task('bower-js', function () {
+    return gulp.src(['bower_components/**/echarts.min.js'])
+        .pipe(flatten())
+        .pipe(gulp.dest('dist/js'));
+})
+gulp.task('bower', ['bower-css', 'bower-js'])
+
+// // Compress the html files
+// gulp.task('html:dist', function () {
+//     gulp.src([srcDir + '*.html'])
+//        // .pipe(wiredep({
+//        //      optional: 'configuration',
+//        //      goes: 'here'
+//        //  })
+//        // )
+//        .pipe(gulp.dest(dstDir));
+// });
 
 // inject bower components
 // gulp.task('wiredep', function () {
@@ -169,13 +217,14 @@ gulp.task('img', function () {
 // Compress images
 gulp.task('img:dist', function () {
     gulp.src([srcDir + 'images/**/*'])
-       .pipe(gulp.dest(tmpDir));
+       .pipe(gulp.dest(dstDir + 'images/'));
 });
 
 // Build a deploy version
-gulp.task('build', ['clean:dist', 'html:dist', 'sass:dist', 'js:dist'], function () {
-
-});
+gulp.task('build', gulpSequence('clean', ['img:dist'], 'html:dist'));
+// gulp.task('build', ['clean:dist', 'html:dist', 'sass:dist', 'js:dist'], function () {
+//
+// });
 
 // Build a deploy version & testing
 gulp.task('build:watch', ['build'], function () {
