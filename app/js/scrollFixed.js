@@ -1,3 +1,8 @@
+/**
+ * Created by joriscai on 2016/11/25.
+ */
+var addEvent = require('./EventListener');
+
 // nav layout
 var nav = document.getElementsByTagName('nav')[0];
 var navPos = document.getElementsByTagName('header')[0].offsetHeight
@@ -8,8 +13,15 @@ function hasClass(obj, cls) {
     return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
 }
 
-document.addEventListener('scroll', function () {
-    var scrollH = this.body.scrollTop;
+addEvent(document, 'scroll', function (e) {
+    // 解决scrollTop
+    var scrollTop = window.pageYOffset  //用于FF
+        || document.documentElement.scrollTop
+        || document.body.scrollTop
+        || 0;
+
+    var scrollH = scrollTop;
+
     if (scrollH > navPos) {
         var oClass = nav.className;
         var blank = (oClass != '') ? ' ' : '';
