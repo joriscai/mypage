@@ -154,6 +154,7 @@ header {
 		font-size: 1em;
 		background: #007888;
 		box-shadow: 0 5px 12px rgba(0, 0, 0, 0.4);
+		z-index: 1000;
 		ul{
 			margin: 0;
 			li{
@@ -313,6 +314,9 @@ header {
 	}
 	//技能
 	.skill{
+		#charts > div{
+			z-index: 1;
+		}
 		.o-title{
 			padding-bottom: 15px;
 		}

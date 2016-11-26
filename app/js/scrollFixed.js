@@ -13,8 +13,8 @@ function hasClass(obj, cls) {
     return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
 }
 
-addEvent(document, 'scroll', function (e) {
-    // 解决scrollTop
+addEvent(window, 'scroll', function () {
+    // 解决scrollTop兼容问题
     var scrollTop = window.pageYOffset  //用于FF
         || document.documentElement.scrollTop
         || document.body.scrollTop
