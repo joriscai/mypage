@@ -9,6 +9,9 @@ var header = document.getElementsByTagName('header')[0];
 var navPos = header.offsetHeight
             - nav.offsetHeight;
 var clsName = 'navFixed';
+
+var toTop = document.getElementById('scroll-top');
+
 // 判断是否有该类选择器
 function hasClass(obj, cls) {
     return obj.className.match(new RegExp('(\\s|^)' + cls + '(\\s|$)'));
@@ -38,4 +41,34 @@ addEvent(window, 'scroll', function () {
             header.style.marginBottom = null
         }
     }
+    // 返回顶部显示
+    var tmp = scrollH - 200;
+    if (tmp > 0) {
+        var oClass = toTop.className;
+        var blank = (oClass != '') ? ' ' : '';
+        if (!hasClass(toTop, 'show')) {
+            toTop.className = oClass + blank + 'show';
+        }
+    }else {
+        if (hasClass(toTop, 'show')) {
+            var reg = new RegExp('(\\s|^)' + 'show' + '(\\s|$)');
+            toTop.className = toTop.className.replace(reg, '');
+        }
+    }
 });
+
+// 返回顶部动作
+var time = null;
+addEvent(toTop, 'click', function () {
+    var sHeight = window.pageYOffset  //用于FF
+    || document.documentElement.scrollTop
+    || document.body.scrollTop
+    || 0;;
+    time = setInterval(function () {
+        if (sHeight <= 0) {
+            clearInterval(time);
+        }
+        sHeight -= 80;
+        window.scrollTo(0, sHeight);
+    }, 30);
+})

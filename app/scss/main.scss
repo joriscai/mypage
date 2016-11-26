@@ -390,7 +390,7 @@ header {
 	from { transform: rotateY(90deg) scale(0.5); }
     to { transform: rotateY(0); }
 }
-
+// 脚注
 footer{
 	padding: 0 0 10px;
 	background-color: #2c3d52;
@@ -413,4 +413,47 @@ footer{
 			line-height: 2em;
 		}
 	}
+}
+
+// 返回顶部
+#scroll-top{
+	display: none\9;
+	position: fixed;
+	right: 80px;
+	bottom: 100px;
+	background: #008fa1;
+	z-index: 30;
+    width: 45px;
+    height: 45px;
+	border-radius: 50%;
+	color: white;
+	font-size: 29px;
+	cursor: pointer;
+	box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+	opacity: 0;
+	animation: opacityHidden 0.5s;
+	animation-timing-function: linear;
+	animation-iteration-count:1;
+	&.show{
+		opacity: 1;
+		animation: opacityShow 0.5s;
+		animation-timing-function: linear;
+		animation-iteration-count:1;
+	}
+	i{
+		font-weight: 800;
+	}
+}
+
+// * scroll to top
+// 	 css 动画 */
+@keyframes opacityShow
+{
+	from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes opacityHidden
+{
+	from { opacity: 1; }
+    to { opacity: 0; }
 }
