@@ -58,6 +58,7 @@ gulp.task('watch', function () {
 
     gulp.watch(srcDir + "js/**/*.js", ['js-watch']);
     gulp.watch(srcDir + "scss/**/*.scss", ['sass']);
+    gulp.watch(srcDir + "images/**/*", ['img']);
     gulp.watch("bower.json", ['html']);
     gulp.watch(srcDir + "*.html", ['html']);
     watch(tmpDir + '*.html').on('change', function (e) {
