@@ -1,4 +1,5 @@
 var scrollFixed = require('./scrollFixed');
+var scrollTo = require('./scrollTo');
 
 (function () {
     var myChart = echarts.init(document.getElementById('charts'));
