@@ -5,7 +5,8 @@ var addEvent = require('./EventListener');
 
 // nav layout
 var nav = document.getElementsByTagName('nav')[0];
-var navPos = document.getElementsByTagName('header')[0].offsetHeight
+var header = document.getElementsByTagName('header')[0];
+var navPos = header.offsetHeight
             - nav.offsetHeight;
 var clsName = 'navFixed';
 // 判断是否有该类选择器
@@ -26,6 +27,7 @@ addEvent(window, 'scroll', function () {
         var oClass = nav.className;
         var blank = (oClass != '') ? ' ' : '';
         if (!hasClass(nav, clsName)) {
+            header.style.marginBottom = nav.offsetHeight + 'px';
             nav.className = oClass + blank + clsName;
         }
     }else if (scrollH < navPos) {
@@ -33,6 +35,7 @@ addEvent(window, 'scroll', function () {
         if (hasClass(nav, clsName)) {
             var reg = new RegExp('(\\s|^)' + clsName + '(\\s|$)');
             nav.className = nav.className.replace(reg, '');
+            header.style.marginBottom = null
         }
     }
 });

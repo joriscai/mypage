@@ -70,7 +70,7 @@ header {
 		color: white;
 		filter: progid:DXImageTransform.Microsoft.Alpha(opacity=60);
 		color: rgba(255, 255, 255, 0.6);
-		&:hover,.active,&:visited{
+		&:hover,&:active,&:focus,&:visited,.active{
 			text-decoration: none;
 			color: white;
 		}
