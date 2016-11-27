@@ -95,12 +95,33 @@ header {
 			border-radius: 2px;
 			box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.4);
 			text-transform: uppercase;
+			border: none;
 			&:hover{
 				background: $ahover-cl;
 				color: white;
 			}
 		}
 	}
+
+	// IE7提供下载按钮
+	@at-root .btn-action{
+		text-align: center;
+		a.btn{
+			background: #008fa1;
+			color: #fff;
+			padding: 8px 15px;
+			border-radius: 2px;
+			box-shadow: 0 3px 5px 0 rgba(0, 0, 0, 0.4);
+			text-transform: uppercase;
+			border: none;
+			margin: 20px;
+			&:hover{
+				background: $ahover-cl;
+				color: white;
+			}
+		}
+	}
+	
 	// 简单介绍
 	@at-root .intro{
 		background: $ahover-cl;
@@ -328,7 +349,7 @@ header {
 		    border: 1px solid #e2e2e2;
 		    margin-bottom: 20px;
 		    font-size: 16px;
-			background: #eee;
+			background: #f1f1f1;
 		}
 	}
 	// 联系方式
