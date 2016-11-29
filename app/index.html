@@ -34,7 +34,7 @@
 	<header class="clearfix">
 		<!-- 顶部按钮 -->
 		<div class="top-bar container-fluid">
-			<div class="top-actions">
+			<div class="top-actions hidden-xs">
 				<a class="btn first" id="send-email" href="mailto:516003559@qq.com">
 					<i class="fa fa-paper-plane" aria-hidden="true"></i>
 					Hire Me
@@ -65,7 +65,7 @@
 		</div>
 
 		<!-- 导航栏 -->
-		<nav class="text-center">
+		<nav class="text-center hidden-xs">
 			<ul class="list-unstyled list-inline inline">
 				<li><a href="#about-me" scroll="about-me">About Me</a></li>
 				<li><a href="#exp" scroll="exp">Experiences</a></li>
@@ -95,13 +95,13 @@
 						<i class="fa fa-location-arrow"></i>
 						<a href="#">广州 从化</a>
 					</li>
-					<li title="工作">
-						<i class="fa fa-desktop"></i>
-						<a href="#">暂无</a>
-					</li>
 					<li class="" title="学历">
 						<i class="fa fa-graduation-cap"></i>
 						<a href="#">软件工程(本科)</a>
+					</li>
+					<li title="工作">
+						<i class="fa fa-desktop"></i>
+						<a href="#">暂无</a>
 					</li>
 					<li class="" title="我的主页">
 						<i class="fa fa-globe"></i>
@@ -111,15 +111,16 @@
 			</div>
 			<!-- experience -->
 			<div class="exp c-box container" id="exp">
-				<div class="h2 text-center">Experiences</div>
-				<div class="timeline">
-					<div class="item">
-						<!-- <div class="work-place">
+				<div class="" style="width:80%;margin:0 auto;">
+					<div class="h2 text-center">Experiences</div>
+					<div class="timeline">
+						<div class="item">
+							<!-- <div class="work-place">
 							<h3 class="place">Google</h3>
 							<div class="location"><i class="fa fa-map-marker" aria-hidden="true"></i>Mountain View</div>
 						</div> -->
 						<div class="time text-center">2016年12月</div>
-						<div class="job-meta">
+						<div class="job-meta clearfix">
 							<div class="title">xxxxxx项目</div>
 							<div class="office">
 								<i class="fa fa-cogs"></i>
@@ -128,9 +129,10 @@
 						</div>
 						<div class="job-desc">
 							<p>参与xxxxxxx工作，参与xxxxxxx工作，参与xxxxxxx工作
-							，参与xxxxxxx工作，参与xxxxxxx工作，参与xxxxxxx工作，参与xxxxxxx工作</p>
+								，参与xxxxxxx工作，参与xxxxxxx工作，参与xxxxxxx工作，参与xxxxxxx工作</p>
 
 
+							</div>
 						</div>
 					</div>
 				</div>
@@ -139,13 +141,13 @@
 			<!-- skills -->
 			<div class="skill c-box container text-center" id="skill">
 				<div class="h2 text-center">My Skills</div>
-				<div id="charts" style="width: 100%;height:400px;"></div>
+				<div id="charts" class="hidden-xs" style="width: 100%;height:400px;"></div>
 				<div class="o-skill">
 					<div class="h3 text-center o-title">Other Skills</div>
 					<span class="skill-tag">HTML5</span>
 					<span class="skill-tag">CSS3</span>
 					<span class="skill-tag">SASS</span>
-					<span class="skill-tag">Bootstrap</span><br>
+					<span class="skill-tag">Bootstrap</span>
 					<span class="skill-tag">ThinkPHP</span>
 					<span class="skill-tag">MySql</span>
 					<span class="skill-tag">Linux</span>

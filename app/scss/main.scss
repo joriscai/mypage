@@ -75,12 +75,13 @@ header {
 			color: white;
 		}
 	}
-
+	.top-bar{
+		padding-bottom: 125px;
+		padding-top: 10px;
+	}
 	// 头部下载简历区
 	@at-root .top-actions{
 		float: right;
-		padding-bottom: 125px;
-		padding-top: 10px;
 		@include margin(right);
 		.fa{
 			@include margin(right);
@@ -121,7 +122,7 @@ header {
 			}
 		}
 	}
-	
+
 	// 简单介绍
 	@at-root .intro{
 		background: $ahover-cl;
@@ -212,7 +213,7 @@ header {
 			font-size: 17px;
 			padding: 10px 20px;
 			width: 70%;
-			margin: 30px auto 0px;
+			margin: 2.5rem auto 0px;
 			p{
 				line-height: 2.5em;
 			}
@@ -240,7 +241,7 @@ header {
 			overflow: hidden;
 			li{
 				position: relative;
-				margin: 40px 17px 0;
+				margin: 2.8rem 1.2rem 0;
 				a{
 					padding-left: 22px;
 				}
@@ -259,7 +260,7 @@ header {
 	}
 
 	.c-box{
-		padding: 50px;
+		padding: 50px 0px;
 		border-bottom: 1px solid #9da1a2;
 		.text-box{
 			display: inline-block;
@@ -269,7 +270,6 @@ header {
 	.exp{
 		.timeline{
 			border-left: 3px solid $t-cl;
-			width: auto;
 		    position: relative;
 		    padding: 0 35px;
 			margin-left: 200px;
@@ -318,11 +318,14 @@ header {
 					.title{
 						font-weight: bold;
 						font-size: 21px;
+						float: left;
+						padding-right: 50px;
 					}
 					.office{
-						position: absolute;
-						right: 20px;
-						top: 8px;
+						// position: absolute;
+						// right: 20px;
+						// top: 8px;
+						padding-top: 5px;
 						i{
 							padding-right: 5px;
 						}
@@ -338,18 +341,21 @@ header {
 		#charts > div{
 			z-index: 1;
 		}
-		.o-title{
-			padding-bottom: 15px;
-		}
-		.skill-tag{
-			box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
-		    padding: 6px 30px;
-		    display: inline-block;
-		    margin-right: 15px;
-		    border: 1px solid #e2e2e2;
-		    margin-bottom: 20px;
-		    font-size: 16px;
-			background: #f1f1f1;
+		@at-root .o-skill{
+			width: 70%;
+			margin: 0 auto;
+			.o-title{
+				padding-bottom: 15px;
+			}
+			.skill-tag{
+				box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+				padding: 6px 30px;
+				display: inline-block;
+				margin: 0 10px 23px;
+				border: 1px solid #e2e2e2;
+				font-size: 16px;
+				background: #f1f1f1;
+			}
 		}
 	}
 	// 联系方式
@@ -440,7 +446,7 @@ footer{
 #scroll-top{
 	display: none\9;
 	position: fixed;
-	right: 80px;
+	right: 60px;
 	bottom: 100px;
 	background: #008fa1;
 	z-index: 30;
