@@ -1,0 +1,85 @@
+@charset "utf-8";
+
+// 手机屏幕大小
+@media screen and (max-width: 768px)
+{
+    // experience
+    .item{
+        margin-top: 15px;
+        .time{
+            font-size: 20px;
+            display: inline-block;
+            padding-right: 4rem;
+        }
+        @at-root .job-meta{
+            display: inline-block;
+            padding-bottom: 5px;
+            .title{
+                font-weight: bold;
+                font-size: 20px;
+                display: inline-block;
+                padding-right: 4rem;
+            }
+            .office{
+                display: inline-block;
+                font-size: 18px;
+                i{
+                    padding-right: 5px;
+                }
+            }
+        }
+        @at-root .job-desc{
+            font-size: 1.6rem;
+        }
+    }
+
+    .o-skill{
+		width: 80%;
+		.skill-tag{
+			padding: 6px 25px;
+		}
+	}
+
+    // contact
+    @at-root .contact-box{
+
+        .send-to,.contact-msg{
+            position: relative;
+        }
+        .send-to{
+            padding: 0 20px;
+            input,textarea{
+                resize: vertical;
+            }
+            .btn{
+                background-color: $ahover-cl;
+                &:hover,&:active{
+                    background-color: #057281;
+                }
+            }
+            .or-flag{
+                margin: 20px 0;
+                width: 50px;
+                height: 50px;
+                text-align: center;
+                color: white;
+                line-height: 1.1;
+                font-size: 42px;
+                border-radius: 50%;
+                background: black;
+                filter: progid:DXImageTransform.Microsoft.Alpha(opacity=25);
+                background: rgba(0,0,0,.25);
+            }
+        }
+        .contact-msg{
+            padding: 0 20px;
+            .msg-box{
+                padding-bottom: 1.8em;
+            }
+        }
+    }
+
+    #scroll-top{
+        right: 20px;
+    }
+}

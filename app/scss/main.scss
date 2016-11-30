@@ -10,6 +10,8 @@ $ahover-cl:#00a5bb;
 $area-cl:#5686D6;
 
 
+
+
 // mixin method
 @mixin margin($dir:left, $num:	10) {
 	margin-#{$dir}:$num+px;
@@ -75,16 +77,26 @@ header {
 			color: white;
 		}
 	}
-	.top-bar{
-		padding-bottom: 125px;
-		padding-top: 10px;
-	}
+
 	// 头部下载简历区
+	.top-bar{
+		padding-bottom: 120px;
+		padding-top: 10px;
+		.menu{
+			i{
+				background: #057281;
+				display: inline-block;
+				padding: 8px;
+				font-size: 1.5rem;
+				border-radius: 3px;
+			}
+		}
+	}
 	@at-root .top-actions{
 		float: right;
 		@include margin(right);
 		.fa{
-			@include margin(right);
+			//@include margin(right);
 		}
 		a.first{
 			@include margin(right,15);
@@ -212,7 +224,7 @@ header {
 			position: relative;
 			font-size: 17px;
 			padding: 10px 20px;
-			width: 70%;
+			width: 75%;
 			margin: 2.5rem auto 0px;
 			p{
 				line-height: 2.5em;
@@ -268,70 +280,75 @@ header {
 	}
 	// 经验
 	.exp{
+		@media screen and (min-width: 768px)
+		{
 		.timeline{
 			border-left: 3px solid $t-cl;
 		    position: relative;
 		    padding: 0 35px;
 			margin-left: 200px;
 			margin-top: 30px;
-			@at-root .item{
-				position: relative;
-				padding-bottom: 40px;
-				&:before,&:after{
-					content: "";
-					position: absolute;
-					display: inline-block;
-					background-clip: padding-box;
-					border-radius: 50%;
-				}
-				&:before{
-					left: -47px;
-					top: 0;
-					width: 22px;
-					height: 22px;
-					background: $bg-cl;
-					border: 3px solid $t-cl;
-				}
-				&:after {
-					left: -41px;
-					top: 6px;
-					width: 10px;
-					height: 10px;
-					background: $t-cl;
-					z-index: 10;
-				}
-				.time{
-					position: absolute;
-					left: -220px;
-					top: 0px;
-					font-size: 20px;
-    				background: $t-cl;
-					color: white;
-					width: 150px;
-					border-radius: 4px;
+				@at-root .item{
+					position: relative;
+					padding-bottom: 40px;
+					&:before,&:after{
+						content: "";
+						position: absolute;
+						display: inline-block;
+						background-clip: padding-box;
+						border-radius: 50%;
+					}
 					&:before{
-						@include triHor(left, 5, 10, $t-cl, 8);
+						left: -47px;
+						top: 0;
+						width: 22px;
+						height: 22px;
+						background: $bg-cl;
+						border: 3px solid $t-cl;
 					}
-				}
-				@at-root .job-meta{
-					padding-bottom: 10px;
-					.title{
-						font-weight: bold;
-						font-size: 21px;
-						float: left;
-						padding-right: 50px;
+					&:after {
+						left: -41px;
+						top: 6px;
+						width: 10px;
+						height: 10px;
+						background: $t-cl;
+						z-index: 10;
 					}
-					.office{
-						// position: absolute;
-						// right: 20px;
-						// top: 8px;
-						padding-top: 5px;
-						i{
-							padding-right: 5px;
+					.time{
+						position: absolute;
+						left: -220px;
+						top: 0px;
+						font-size: 20px;
+	    				background: $t-cl;
+						color: white;
+						width: 150px;
+						border-radius: 4px;
+						word-break: keep-all;
+						text-align: center;
+						&:before{
+							@include triHor(left, 5, 10, $t-cl, 8);
 						}
 					}
-				}
-				@at-root .job-desx{
+					@at-root .job-meta{
+						padding-bottom: 10px;
+						.title{
+							font-weight: bold;
+							font-size: 21px;
+							// float: left;
+							// padding-right: 50px;
+						}
+						.office{
+							position: absolute;
+							right: 20px;
+							top: 8px;
+							// padding-top: 5px;
+							i{
+								padding-right: 5px;
+							}
+						}
+					}
+					@at-root .job-desx{
+					}
 				}
 			}
 		}
@@ -361,52 +378,55 @@ header {
 	// 联系方式
 	.contact{
 		border-bottom: 0px;
-        @at-root .contact-box{
-            display: flex;
-			.title{
-				padding-bottom: 0.8em;
-			}
-			.send-to,.contact-msg{
-				position: relative;
-				float: left\9;
-				width: 50%\9;
-				flex: 1;
-			}
-			$pad-width: 80px;
-			.send-to{
-				padding-right: $pad-width;
-				input,textarea{
-					resize: vertical;
+		@media screen and (min-width: 768px)
+		{
+	        @at-root .contact-box{
+	            display: flex;
+				.title{
+					padding-bottom: 0.8em;
 				}
-				.btn{
-					background-color: $ahover-cl;
-					&:hover,&:active{
-						background-color: #057281;
+				.send-to,.contact-msg{
+					position: relative;
+					float: left\9;
+					width: 50%\9;
+					flex: 1;
+				}
+				$pad-width: 80px;
+				.send-to{
+					padding-right: $pad-width;
+					input,textarea{
+						resize: vertical;
+					}
+					.btn{
+						background-color: $ahover-cl;
+						&:hover,&:active{
+							background-color: #057281;
+						}
+					}
+					.or-flag{
+						position: absolute;
+						right: -25px;
+						top: 43%;
+						width: 50px;
+						height: 50px;
+						text-align: center;
+						color: white;
+						line-height: 1.1;
+						font-size: 42px;
+						border-radius: 50%;
+						background: black;
+						filter: progid:DXImageTransform.Microsoft.Alpha(opacity=25);
+						background: rgba(0,0,0,.25);
 					}
 				}
-				.or-flag{
-					position: absolute;
-					right: -25px;
-					top: 43%;
-					width: 50px;
-					height: 50px;
-					text-align: center;
-					color: white;
-					line-height: 1.1;
-					font-size: 42px;
-					border-radius: 50%;
-					background: black;
-					filter: progid:DXImageTransform.Microsoft.Alpha(opacity=25);
-					background: rgba(0,0,0,.25);
+				.contact-msg{
+					padding-left: $pad-width;
+					.msg-box{
+						padding-bottom: 1.8em;
+					}
 				}
-			}
-			.contact-msg{
-				padding-left: $pad-width;
-				.msg-box{
-					padding-bottom: 1.8em;
-				}
-			}
-        }
+	        }
+		}
 	}
 }
 
@@ -484,3 +504,5 @@ footer{
 	from { opacity: 1; }
     to { opacity: 0; }
 }
+
+@import "./responsive.scss";
