@@ -355,8 +355,16 @@ header {
 	}
 	//技能
 	.skill{
-		#charts > div{
-			z-index: 1;
+		#charts {
+			margin: 0 auto;
+			text-align: center;
+			.skill-charts{
+				display: inline-block;
+				z-index: 1;
+				height: 170px;
+				width: 250px;
+				margin:0 auto;
+			}
 		}
 		@at-root .o-skill{
 			width: 70%;
