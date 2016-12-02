@@ -1,5 +1,7 @@
 "use strict";
-
+// C:\Users\Administrator\AppData\Roaming\npm\node_modules
+process.env.NODE_PATH = 'C:\\Users\\Administrator\\AppData\\Roaming\\npm\\node_modules';
+require('module').Module._initPaths();
 // gulp变量
 var gulp = require('gulp'),
     path = require('path'),
