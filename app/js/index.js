@@ -1,10 +1,10 @@
 var scrollFixed = require('./scrollFixed');
 var scrollTo = require('./scrollTo');
+var addEvent = require('./EventListener');
 
 (function () {
-    // var myChart = echarts.init(document.getElementById('charts'));
     var charts = document.getElementsByClassName('skill-charts');
-    console.log(charts);
+
     var myChart = [];
     for (var i = 0; i < charts.length; i++) {
         myChart[i] = echarts.init(charts[i]);
@@ -18,14 +18,9 @@ var scrollTo = require('./scrollTo');
     var data = [80,50,85,90,50,50],
         radius = [55, 65],
         name = ["Javascript", "React", "Grunt", "Git", "Node", "PHP"],
-        color = ['#c23531','#2f4554', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
-        // centerX = ['20%','50%','80%'],
-        // centerY = ['30%','75%'],
-        // center = [
-        //     [centerX[0], centerY[0]], [centerX[1], centerY[0]], [centerX[2], centerY[0]],
-        //     [centerX[0], centerY[1]], [centerX[1], centerY[1]], [centerX[2], centerY[1]]
-        // ],
+        color = ['#c23531', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
         fontSize = 18;
+
     var labelFromatter = {
             normal : {
                 label : {
@@ -67,156 +62,74 @@ var scrollTo = require('./scrollTo');
             }
         };
 
-    function getOption(name, data) {
+    function getOption(name, data, color) {
         // 指定图表的配置项和数据
         var option = {
-            series: [
+            baseOption: {
+                series: [
+                    {
+                        name: name,
+                        type: "pie",
+                        radius: radius,
+                        center : 'center',
+                        hoverAnimation: false,
+                        itemStyle: labelFromatter,
+                        legendHoverLink: false,
+                        label: {
+                            normal: {
+                                show: true,
+                                position: 'bottom'
+                            }
+                        },
+                        labelLine: {
+                            normal: {
+                                show: false
+                            }
+                        },
+                        data: [
+                            {value: data, name: name, itemStyle: labelTop},
+                            {value: 100 - data, name: " ", itemStyle: labelBottom}
+                        ]
+                    }
+                ],
+                color: [color, '#2f4554']
+            },
+            media: [
                 {
-                    name: name,
-                    type: "pie",
-                    radius: radius,
-                    center : 'center',
-                    hoverAnimation: false,
-                    itemStyle: labelFromatter,
-                    legendHoverLink: false,
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'bottom'
-                        }
+                    query: {
+                        minWidth: 768
                     },
-                    labelLine: {
-                        normal: {
-                            show: false
-                        }
-                    },
-                    data: [
-                        {value: data, name: name, itemStyle: labelTop},
-                        {value: 100 - data, name: " ", itemStyle: labelBottom}
-                    ]
+                    option: {
+                        series: [
+                            {
+                                radius: [radius[0] - 20, radius[1] - 20],
+                                center : 'center'
+                            }
+                        ]
+                    }
+                },
+                {
+                    option: {
+                        series: [
+                            {
+                                radius: radius,
+                                center : 'center'
+                            }
+                        ]
+                    }
                 }
             ]
         };
         return option;
     }
-            // },{
-            //     name: "React",
-            //     type: "pie",
-            //     radius: radius,
-            //     center : center[1],
-            //     hoverAnimation: false,
-            //     itemStyle: labelFromatter,
-            //     label: {
-            //         normal: {
-            //             show: true,
-            //             position: 'bottom'
-            //         }
-            //     },
-            //     labelLine: {
-            //         normal: {
-            //             show: false
-            //         }
-            //     },
-            //     data: [
-            //         {value: data[1], name: "React", itemStyle: labelTop},
-            //         {value: 100 - data[1], name: " ", itemStyle: labelBottom}
-            //     ]
-            // },{
-            //     name: "Grunt/Gulp",
-            //     type: "pie",
-            //     radius: radius,
-            //     center : center[2],
-            //     hoverAnimation: false,
-            //     itemStyle: labelFromatter,
-            //     label: {
-            //         normal: {
-            //             show: true,
-            //             position: 'bottom'
-            //         }
-            //     },
-            //     labelLine: {
-            //         normal: {
-            //             show: false
-            //         }
-            //     },
-            //     data: [
-            //         {value: data[2], name: "Gulp", itemStyle: labelTop},
-            //         {value: 100 - data[2], name: " ", itemStyle: labelBottom}
-            //     ]
-            // },{
-            //     name: "Git",
-            //     type: "pie",
-            //     radius: radius,
-            //     center : center[3],
-            //     hoverAnimation: false,
-            //     itemStyle: labelFromatter,
-            //     label: {
-            //         normal: {
-            //             show: true,
-            //             position: 'bottom'
-            //         }
-            //     },
-            //     labelLine: {
-            //         normal: {
-            //             show: false
-            //         }
-            //     },
-            //     data: [
-            //         {value: data[3], name: "Git", itemStyle: labelTop},
-            //         {value: 100 - data[3], name: " ", itemStyle: labelBottom}
-            //     ]
-            // },{
-            //     name: "Node.js",
-            //     type: "pie",
-            //     radius: radius,
-            //     center : center[4],
-            //     hoverAnimation: false,
-            //     itemStyle: labelFromatter,
-            //     label: {
-            //         normal: {
-            //             show: true,
-            //             position: 'bottom'
-            //         }
-            //     },
-            //     labelLine: {
-            //         normal: {
-            //             show: false
-            //         }
-            //     },
-            //     data: [
-            //         {value: data[4], name: "Node.js", itemStyle: labelTop},
-            //         {value: 100 - data[4], name: " ", itemStyle: labelBottom}
-            //     ]
-            // },{
-            //     name: "PHP",
-            //     type: "pie",
-            //     radius: radius,
-            //     center : center[5],
-            //     hoverAnimation: false,
-            //     itemStyle: labelFromatter,
-            //     label: {
-            //         normal: {
-            //             show: true,
-            //             position: 'bottom'
-            //         }
-            //     },
-            //     labelLine: {
-            //         normal: {
-            //             show: false
-            //         }
-            //     },
-            //     data: [
-            //         {value: data[5], name: "PHP", itemStyle: labelTop},
-            //         {value: 100 - data[5], name: " ", itemStyle: labelBottom}
-            //     ]
-            // }
-    //     ]
-    // };
 
     // 使用刚指定的配置项和数据显示图表。
-    // myChart.setOption(option);
     for (var i = 0; i < myChart.length; i++) {
-        myChart[i].setOption(getOption(name[i], data[i]));
+        myChart[i].setOption(getOption(name[i], data[i], color[i]));
     }
+    addEvent(window, 'resize', function () {
+        myChart[1].resize();
+        console.log('resize');
+    })
 
 })();
