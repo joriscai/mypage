@@ -4,6 +4,8 @@
     /*允许一个声明多个变量*/
     "requireMultipleVarDecl": false,
     "requireVarDeclFirst": false,
+    "disallowDanglingUnderscores": false,
+    "disallowSpacesInsideArrayBrackets": false,
     // Report all errors (-1 or null)
     "maxErrors": null
 }
