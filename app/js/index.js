@@ -41,7 +41,7 @@ var addEvent = require('./EventListener');
                     formatter : '{b}',
                     position : 'center',
                     textStyle: {
-                        fontSize: fontSize,
+                        fontSize: fontSize - 2,
                         baseline : 'bottom'
                     }
                 },
@@ -97,12 +97,12 @@ var addEvent = require('./EventListener');
             media: [
                 {
                     query: {
-                        minWidth: 768
+                        maxWidth: 200
                     },
                     option: {
                         series: [
                             {
-                                radius: [radius[0] - 20, radius[1] - 20],
+                                radius: [radius[0] - 10, radius[1] - 10],
                                 center : 'center'
                             }
                         ]
@@ -128,8 +128,9 @@ var addEvent = require('./EventListener');
         myChart[i].setOption(getOption(name[i], data[i], color[i]));
     }
     addEvent(window, 'resize', function () {
-        myChart[1].resize();
-        console.log('resize');
+        for (var i = 0; i < myChart.length; i++) {
+            myChart[i].resize();
+        }
     })
 
 })();
