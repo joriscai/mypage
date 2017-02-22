@@ -77,7 +77,15 @@ header {
 			color: white;
 		}
 	}
-
+	// 语言选项
+	.language{
+		a{
+			color: #008a75;
+		}
+		.active{
+			background-color: #aee2d9;
+		}
+	}
 	// 头部下载简历区
 	.top-bar{
 		padding-bottom: 120px;
