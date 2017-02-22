@@ -149,9 +149,9 @@ gulp.task('html', function () {
        .pipe(gulp.dest(tmpDir));
 });
 var replaceThis = {
-    "../bower_components/echarts/dist/echarts.min.js": "http://cdn.bootcss.com/echarts/3.3.1/echarts.min.js",
-    "../bower_components/bootstrap/dist/css/bootstrap.min.css": "http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css",
-    "../bower_components/font-awesome/css/font-awesome.min.css": "http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    "../bower_components/echarts/dist/echarts.min.js": "//cdn.bootcss.com/echarts/3.3.1/echarts.min.js",
+    "../bower_components/bootstrap/dist/css/bootstrap.min.css": "//cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css",
+    "../bower_components/font-awesome/css/font-awesome.min.css": "//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css"
 };
 // handle the build path and introduce file version to html file
 gulp.task('html:dist', ['js:dist', 'sass:dist', 'html'], function () {
@@ -207,6 +207,7 @@ gulp.task('build:watch', ['build'], function () {
         server: {
             baseDir: dstDir,
             routes: { //URL匹配,值是文件夹要提供的（相对于当前的工作目录）
+                "./": dstDir
             }
         },
         //在Chrome浏览器中打开网站
