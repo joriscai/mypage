@@ -1,5 +1,5 @@
 # 个人简历网页版
-***
+
 ### Preview
 [我的简历](https://joriscai.github.io/mypage/dist/)
 
@@ -47,5 +47,6 @@ gulp build
 2. 优化代码、引入CI开发模式
 3. 引入自动代上线功能，实现即改即上线
 4. .....
-***
+
+---
 #### * 欢迎大家fork和star，有新功能也可以加入，谢谢！*
