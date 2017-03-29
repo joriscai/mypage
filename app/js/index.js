@@ -17,7 +17,7 @@ var addEvent = require('./EventListener');
     //     PHP: 50
     var data = [80,50,85,90,50,50],
         radius = [55, 65],
-        name = ["Javascript", "React", "Grunt", "Git", "Node", "PHP"],
+        name = ["Javascript", "React", "Gulp", "Git", "Node", "PHP"],
         color = ['#c23531', '#61a0a8', '#d48265', '#91c7ae','#749f83',  '#ca8622', '#bda29a','#6e7074', '#546570', '#c4ccd3'],
         fontSize = 18;
 
