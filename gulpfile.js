@@ -176,7 +176,7 @@ gulp.task('html:dist', ['js:dist', 'sass:dist', 'html'], function () {
 // copy the bower dependencies to the build path
 gulp.task('bower-css', function () {
     return gulp.src(['bower_components/**/*.min.css'])
-        .pipe(flatten())
+        .pipe(flatten()) // 移动文件
         .pipe(gulp.dest('dist/css'));
 })
 gulp.task('bower-js', function () {
